@@ -274,6 +274,8 @@ int  conf_get_vidsz(const struct conf *conf, const char *name,
 		    struct vidsz *sz);
 int  conf_get_sa(const struct conf *conf, const char *name, struct sa *sa);
 enum jbuf_type conf_get_jbuf_type(const struct pl *pl);
+int conf_get_csv(const struct conf *conf, const char *name,
+		 char *str1, size_t sz1, char *str2, size_t sz2);
 void conf_close(void);
 struct conf *conf_cur(void);
 int conf_loadfile(struct mbuf **mbp, const char *filename);

@@ -19,11 +19,14 @@
 struct mccfg {
 	uint32_t callprio;
 	uint32_t ttl;
+	char play_mod[16];
+	char play_dev[128];
 };
 
 static struct mccfg mccfg = {
 	0,
 	1,
+	"", ""
 };
 
 
@@ -120,6 +123,28 @@ uint8_t multicast_callprio(void)
 uint8_t multicast_ttl(void)
 {
 	return mccfg.ttl;
+}
+
+
+/**
+ * Getter for configurable multicast player module
+ *
+ * @return char* multicast player module
+ */
+char *multicast_play_mod(void)
+{
+	return mccfg.play_mod;
+}
+
+
+/**
+ * Getter for configurable multicast player device
+ *
+ * @return char* multicast player device
+ */
+char *multicast_play_dev(void)
+{
+	return mccfg.play_dev;
 }
 
 
@@ -593,6 +618,10 @@ static int module_read_config(void)
 	(void)conf_get_u32(conf_cur(), "multicast_ttl", &mccfg.ttl);
 	if (mccfg.ttl > 255)
 		mccfg.ttl = 255;
+
+	(void)conf_get_csv(conf_cur(), "multicast_player",
+		mccfg.play_mod, sizeof(mccfg.play_mod),
+		mccfg.play_dev, sizeof(mccfg.play_dev));
 
 	sa_init(&laddr, AF_INET);
 	err = conf_apply(conf_cur(), "multicast_listener",

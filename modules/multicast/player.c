@@ -450,8 +450,8 @@ int mcplayer_start(struct jbuf *jbuf, const struct aucodec *ac)
 	player->play_fmt = cfg->play_fmt;
 	player->dec_fmt = cfg->dec_fmt;
 
-	err = str_dup(&player->module, cfg->play_mod);
-	err |= str_dup(&player->device, cfg->play_dev);
+	err = str_dup(&player->module, multicast_play_mod());
+	err |= str_dup(&player->device, multicast_play_dev());
 	if (err)
 		goto out;
 
